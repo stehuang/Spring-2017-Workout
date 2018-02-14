@@ -1,0 +1,107 @@
+---
+title: "Spring 2017 Workout"
+author: "Stella Huang"
+date: "February 2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+ > ## Part 1: Analysis of Distance
+
+###Hello! 
+##### My name is Stella. Here's a little background about my running journey:
+##### I started running during my freshman year of high school to get in shape. Although I struggled to catch my breath and took 3-5 minute breaks between every kilometer, I soon developed endurance and picked up my speed. Running became an on-and-off activity later during high school though, due to the amount of stress from college applications and my participation in volleyball/soccer. It wasn't until freshman year of college where I took running seriously, where I committed myself to running weekly, to 2-3 times per week, then 3-5 times per week. I love running because it renders an 30-minutes oppotunity to think and reflect upon all the happenings; I also love the feeling of sweating and the relaxation after completing a run. 
+##### Simultaneously, as a person obsessed with numbers, I cared about how much the distance and time I ran, thus took pictures/screenshots of such statstics after each workout. Eventually, I accumulated dozens of photos and transferred all the data onto a spreadsheet. I've always longed to not only discover things I like, but also combine them too. Inspired by my passion for running and led to this creation of using R to analyze my running stats! 
+
+```{r}
+# importing the csv file containg all my running data
+workout<-read.csv("Workout.csv",header=TRUE)
+head(workout)
+str(workout)
+```
+
+```{r}
+# converting the column extracted from "workout" into numeric type
+as.numeric(workout$Distance)
+# amount of runs
+times<-length(workout$Distance)
+times
+# sum of distance
+sum<-sum(workout$Distance)
+sum
+# histogram displaying the frequency of distance
+hist(workout$Distance,breaks=10,density=20,col="gold",main="Frequency of Distance",xlab="Distance(mile)")
+#drawing line that shows the averg. distance & creating the legend
+average.dis<-sum/times
+average.dis
+lines(density(workout$Distance),lwd=2,col="blue")
+abline(v=average.dis,lty=2,col="blue")
+legend("topright", c("Average Distance"),col="blue",lty=2,inset=0.05,cex=0.45)
+
+# constructing barplots for each month
+by.month<-table(workout$Month)
+by.month
+
+# histogram for april; constructing in the same manner as above
+april<-data.frame(workout$Month,workout$Distance)[1:19,]
+april
+average.april<-sum(april$workout.Distance)/19
+average.april
+hist(april$workout.Distance,breaks=5,density=20,col="gold",main="Distance in April",xlab="Distance(mile)",ylim=c(0,10))
+abline(v=average.april,lty=2,col="blue")
+legend("topright", c("Average Distance"),col="blue",lty=2,inset=0.05,cex=0.45)
+
+# histogram for may;
+may<-data.frame(workout$Month,workout$Distance)[20:43,]
+may
+average.may<-sum(may$workout.Distance)/24
+average.may
+hist(may$workout.Distance,breaks=5,density=20,col="gold",main="Distance in May",xlab="Distance(mile)",ylim=c(0,10))
+abline(v=average.may,lty=2,col="blue")
+legend("topright", c("Average Distance"),col="blue",lty=2,inset=0.05,cex=0.45)
+
+# histogram for june;
+june<-data.frame(workout$Month,workout$Distance)[44:56,]
+june
+average.june<-sum(june$workout.Distance)/13
+average.june
+hist(june$workout.Distance,breaks=5,density=20,col="gold",main="Distance in June",xlab="Distance(mile)",ylim=c(0,10))
+abline(v=average.june,lty=2,col="blue")
+legend("topright", c("Average Distance"),col="blue",lty=2,inset=0.05,cex=0.45)
+```
+
+
+Over the course of 11 weeks, I ran 161.29 miles in total on 56 occassions, averaging 2.88 miles per time. As shown by the histogram and the density curve, the majority of my runs ranged between 3.0-3.5 miles. 
+
+I have also created histograms showing that distance ran during the three months. My average during April(2.858 miles) and June(2.856 miles) are, in fact, lower than the overall average (2.880 miles); my average during May (2.911 miles) accounts for this, as almost half of my workouts were performed during May. I believe that the average from each month is a better estimate of my progress because 1) I wish to see change over time, and 2) to account for the different amount of workouts for each month. (I started in early April, took running more seriously in May, and ended school in mid-June)
+
+Shown by the great amounts of runs with distances between 3.0 to 3.5 miles, I normally run such lengths; my monthly averages and overall average show that I have more or less been constantly running at the same distance, as the monthly average is within 0.06 miles. To measure my progress better, I will proceed to analyze how my speed as changed throughout the quarter in the next section.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
